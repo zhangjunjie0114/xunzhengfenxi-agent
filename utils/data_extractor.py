@@ -51,15 +51,17 @@ def extract_from_single_paper(text: str, template: list,
         half = max_chars // 2
         text = text[:half] + "\n\n[中间内容省略...]\n\n" + text[-half:]
 
-    system_prompt = """你是一位护理研究领域的文献数据提取专家。你的任务是从给定的文献全文中，按照指定的字段提取结构化数据。
+    system_prompt = """你是一位护理研究领域的文献数据提取专家。你的任务是从给定的文献全文中提取结构化数据。
 
-关键要求：
+绝对规则：
 1. 严格只提取文献中明确陈述的信息，不要推断或编造
-2. 对每项提取的数据，简要标注来源段落
-3. 对于数值数据（样本量、效应量等），务必精确提取
-4. 返回严格的JSON格式，不要包含任何额外说明文字
-5. 如果某字段在原文中确实找不到，填"未报告"
-6. 不要添加markdown代码块标记以外的任何格式"""
+2. 必须返回纯JSON对象，不要任何其他文字、说明或markdown
+3. 不要使用```json```包裹，直接返回 { 开头
+4. 对于数值数据务必精确提取
+5. 如果某字段在原文中找不到，填"未报告"
+6. 字段名必须与用户指定的完全一致
+
+输出示例: {"author_year": "Zhang, 2023", "title": "..."}"""
 
     user_content = f"以下是文献全文，请提取指定字段的数据。\n\n{field_prompt}\n\n---文献全文---\n\n{text}"
     response = call_llm_func(system_prompt, user_content)
@@ -123,27 +125,54 @@ def extract_from_papers(papers: list, template_source,
 
 
 def _parse_json_response(response: str) -> dict:
-    """从LLM回复中解析JSON"""
-    import re
+    """从LLM回复中解析JSON（多策略健壮解析）"""
+    import re, json
+
+    if not response or not response.strip():
+        return {"error": "AI返回为空", "raw": ""}
+
+    # 如果返回明显是错误信息，直接返回
+    if response.strip().startswith("【"):
+        return {"error": response.strip()[:200], "raw": response[:500]}
+
+    # 策略1: 提取 ```json ... ``` 或 ``` ... ``` 块
     code_block = re.search(r'```(?:json)?\s*\n?(.*?)\n?```', response, re.DOTALL)
     if code_block:
         json_str = code_block.group(1).strip()
-    else:
-        json_str = response.strip()
-
-    try:
-        return json.loads(json_str)
-    except json.JSONDecodeError:
-        pass
-
-    brace_match = re.search(r'\{.*\}', json_str, re.DOTALL)
-    if brace_match:
         try:
-            return json.loads(brace_match.group())
+            return json.loads(json_str)
         except json.JSONDecodeError:
             pass
 
-    return {"error": "无法解析AI返回的JSON格式", "raw": response[:500]}
+    # 策略2: 尝试直接解析整个响应
+    try:
+        return json.loads(response.strip())
+    except json.JSONDecodeError:
+        pass
+
+    # 策略3: 提取最外层 {...} 结构（查找第一个{到最后一个}）
+    brace_start = response.find('{')
+    brace_end = response.rfind('}')
+    if brace_start != -1 and brace_end != -1 and brace_end > brace_start:
+        try:
+            return json.loads(response[brace_start:brace_end+1])
+        except json.JSONDecodeError:
+            pass
+
+    # 策略4: 尝试修复常见JSON格式错误
+    fixed = response.strip()
+    fixed = re.sub(r"'([^']+)'", r'"\1"', fixed)  # 单引号转双引号
+    fixed = re.sub(r',(\s*[}\]])', r'\1', fixed)   # 移除多余的逗号
+    brace_start2 = fixed.find('{')
+    brace_end2 = fixed.rfind('}')
+    if brace_start2 != -1 and brace_end2 != -1 and brace_end2 > brace_start2:
+        try:
+            return json.loads(fixed[brace_start2:brace_end2+1])
+        except json.JSONDecodeError:
+            pass
+
+    raw_preview = response[:300]
+    return {"error": f"无法解析AI返回的JSON格式。原始回复: {raw_preview}", "raw": response[:500]}
 
 
 def _default_template() -> list:
