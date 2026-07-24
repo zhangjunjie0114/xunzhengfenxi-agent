@@ -1,0 +1,18 @@
+# API Key
+.env
+
+# 运行时生成
+sessions/
+outputs/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# 系统
+.DS_Store
+Thumbs.db

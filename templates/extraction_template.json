@@ -1,0 +1,142 @@
+[
+  {
+    "field_name": "author_year",
+    "label": "作者/年份",
+    "description": "第一作者姓氏 + 发表年份，如 'Zhang, 2023'",
+    "required": true,
+    "type": "text"
+  },
+  {
+    "field_name": "title",
+    "label": "文献标题",
+    "description": "完整文献标题",
+    "required": true,
+    "type": "text"
+  },
+  {
+    "field_name": "journal",
+    "label": "期刊名称",
+    "description": "发表的期刊全称",
+    "required": true,
+    "type": "text"
+  },
+  {
+    "field_name": "country",
+    "label": "研究国家",
+    "description": "研究实施所在国家或地区",
+    "required": false,
+    "type": "text"
+  },
+  {
+    "field_name": "research_purpose",
+    "label": "研究目的",
+    "description": "该研究的主要研究目的和问题",
+    "required": true,
+    "type": "text"
+  },
+  {
+    "field_name": "study_design",
+    "label": "研究设计类型",
+    "description": "RCT/横断面研究/质性研究/类实验/队列研究/病例对照研究/混合方法等",
+    "required": true,
+    "type": "text"
+  },
+  {
+    "field_name": "population",
+    "label": "研究对象",
+    "description": "研究人群的描述（如：社区高血压患者/ICU护士/术后患者）",
+    "required": true,
+    "type": "text"
+  },
+  {
+    "field_name": "sample_size",
+    "label": "样本量",
+    "description": "总样本量（数字）",
+    "required": true,
+    "type": "text"
+  },
+  {
+    "field_name": "age",
+    "label": "年龄",
+    "description": "年龄范围/均值±标准差，如 '45.2±6.8岁'",
+    "required": false,
+    "type": "text"
+  },
+  {
+    "field_name": "gender",
+    "label": "性别比例",
+    "description": "男女比例或女性占比，如 '女性65%'",
+    "required": false,
+    "type": "text"
+  },
+  {
+    "field_name": "intervention",
+    "label": "干预措施",
+    "description": "干预组接受的具体干预措施描述（如适用）",
+    "required": false,
+    "type": "text"
+  },
+  {
+    "field_name": "comparator",
+    "label": "对照组",
+    "description": "对照组接受的措施描述（如适用）",
+    "required": false,
+    "type": "text"
+  },
+  {
+    "field_name": "outcome_measures",
+    "label": "主要结局指标",
+    "description": "研究测量的主要结局指标",
+    "required": true,
+    "type": "text"
+  },
+  {
+    "field_name": "measurement_tools",
+    "label": "测量工具/量表",
+    "description": "使用的测量工具、量表名称及信效度",
+    "required": false,
+    "type": "text"
+  },
+  {
+    "field_name": "main_findings",
+    "label": "主要研究发现",
+    "description": "该研究的主要结果和发现",
+    "required": true,
+    "type": "text"
+  },
+  {
+    "field_name": "effect_size",
+    "label": "效应量类型",
+    "description": "如 OR/RR/HR/MD/SMD/相关系数等",
+    "required": false,
+    "type": "text"
+  },
+  {
+    "field_name": "effect_size_value",
+    "label": "效应量数值",
+    "description": "效应量的具体数值及置信区间",
+    "required": false,
+    "type": "text"
+  },
+  {
+    "field_name": "confidence_interval",
+    "label": "置信区间",
+    "description": "95%置信区间范围",
+    "required": false,
+    "type": "text"
+  },
+  {
+    "field_name": "conclusion",
+    "label": "作者结论",
+    "description": "作者的主要结论和观点",
+    "required": false,
+    "type": "text"
+  },
+  {
+    "field_name": "limitations",
+    "label": "研究局限性",
+    "description": "文中提到的研究局限性",
+    "required": false,
+    "type": "text"
+  }
+]
