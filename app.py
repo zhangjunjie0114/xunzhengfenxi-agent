@@ -39,10 +39,10 @@ from utils.report_generator import (
 def init_session_state():
     """初始化所有会话状态变量"""
     defaults = {
-        "provider": "DeepSeek V4 (本地代理)",
+        "provider": "兼容OpenAI格式的第三方",
         "api_key": "",
-        "model": "deepseek-v4-flash",
-        "api_base": "http://127.0.0.1:15721/v1",
+        "model": "deepseek-chat",
+        "api_base": "https://api.deepseek.com/v1",
         "papers": [],
         "paper_texts": {},
         "extraction_results": [],
