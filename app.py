@@ -13,8 +13,89 @@ st.set_page_config(
     page_title="循证分析智能体",
     page_icon="🧪",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="expanded",
+    menu_items={
+        'Get Help': None,
+        'Report a Bug': None,
+        'About': None,
+    }
 )
+
+# 隐藏所有 Streamlit 原生UI元素
+_hide_ui = """
+<style>
+/* ========== 彻底隐藏所有 Streamlit 原生UI元素 ========== */
+
+/* 隐藏顶层header/工具栏区域 */
+header {display: none !important;}
+.stApp > header {display: none !important;}
+[data-testid="stHeader"] {display: none !important;}
+
+/* 隐藏部署按钮 */
+.stDeployButton {display: none !important;}
+[data-testid="baseButton-header"] {display: none !important;}
+
+/* 隐藏菜单 */
+#MainMenu {display: none !important;}
+
+/* 隐藏工具栏+状态 */
+[data-testid="stToolbar"] {display: none !important;}
+[data-testid="stDecoration"] {display: none !important;}
+[data-testid="stStatusWidget"] {display: none !important;}
+[data-testid="stAppViewBlock"] {display: none !important;}
+[data-testid="stAppViewContainer"] > section {padding-top: 0 !important;}
+
+/* 隐藏页脚 */
+footer {display: none !important;}
+[data-testid="stFooter"] {display: none !important;}
+
+/* 隐藏所有带 kind="header" 的按钮 */
+button[kind="header"] {display: none !important;}
+
+/* 隐藏所有 data-testid 中包含 "toolbar" 或 "header" 的元素 */
+[data-testid*="Toolbar"] {display: none !important;}
+[data-testid*="Header"] {display: none !important;}
+
+/* 隐藏全屏、管理应用等所有悬浮按钮 */
+button[title*="fullscreen"] {display: none !important;}
+button[title*="Manage"] {display: none !important;}
+button[title*="管理"] {display: none !important;}
+button[aria-label*="fullscreen"] {display: none !important;}
+
+/* 隐藏 Streamlit 品牌水印和社区云入口 */
+.stApp a[href*="streamlit"] {display: none !important;}
+a[href*="streamlit"] {display: none !important;}
+[data-testid="stAppDeployButton"] {display: none !important;}
+[data-testid="stAppDeployButtonLink"] {display: none !important;}
+
+/* 隐藏 "Running" / "Complete" 等状态指示条 */
+[data-testid="stStatus"] {display: none !important;}
+.appview-container .stStatus {display: none !important;}
+
+/* 隐藏连接提示 */
+[data-testid="stConnectionStatus"] {display: none !important;}
+.stAlert > div[role="alert"] {display: none !important;}
+
+/* 调整主内容区 — 消除顶部空白 */
+.appview-container .main .block-container {
+    padding-top: 1rem !important;
+    padding-bottom: 0 !important;
+}
+section.main > div:first-child {padding-top: 0 !important;}
+.stApp {margin-top: 0 !important;}
+.st-emotion-cache-1jicfl2 {padding-top: 0 !important;}
+
+/* 隐藏 Streamlit 生成的所有 iframe 提示 */
+iframe[title*="streamlit"] {display: none !important;}
+
+/* 隐藏侧边栏中可能出现的 Streamlit 原生按钮 */
+section[data-testid="stSidebar"] button[kind="header"] {display: none !important;}
+
+/* 隐藏所有带 st- 前缀的工具类图标按钮 */
+button[class*="st-emotion"] {border: none !important;}
+</style>
+"""
+st.markdown(_hide_ui, unsafe_allow_html=True)
 
 # 导入工具模块
 from utils.llm_caller import call_llm, test_connection, PROVIDER_MODELS, DEFAULT_MODELS
@@ -39,10 +120,10 @@ from utils.report_generator import (
 def init_session_state():
     """初始化所有会话状态变量"""
     defaults = {
-        "provider": "DeepSeek V4 (本地代理)",
+        "provider": "兼容OpenAI格式的第三方",
         "api_key": "",
-        "model": "deepseek-v4-flash",
-        "api_base": "http://127.0.0.1:15721/v1",
+        "model": "deepseek-chat",
+        "api_base": "https://api.deepseek.com/v1",
         "papers": [],
         "paper_texts": {},
         "extraction_results": [],
