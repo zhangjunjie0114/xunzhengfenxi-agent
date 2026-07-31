@@ -1,0 +1,22 @@
+.env
+.env.*
+sessions/
+__pycache__/
+*.pyc
+.DS_Store
+outputs/
+work/
+.claude/
+.claude-code/
+.agents/
+
+# 非必要文件不提交
+AGENTS.md
+CLAUDE.md
+README.md
+git-init.sh
+run.sh
+run.bat
+启动循证分析智能体.command
+方法学与技术设计说明书.docx
+方法学与技术设计说明书.md

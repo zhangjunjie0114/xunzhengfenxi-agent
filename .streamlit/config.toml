@@ -1,0 +1,56 @@
+# 循证分析智能体 — 医学专业主题
+# 基于 shadcn 高对比度基础，适配医疗健康领域配色
+[theme]
+base = "light"
+primaryColor = "#0D9488"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F8FAFC"
+codeBackgroundColor = "#F1F5F9"
+textColor = "#0F172A"
+linkColor = "#0D9488"
+borderColor = "#CBD5E1"
+showWidgetBorder = true
+showSidebarBorder = true
+baseRadius = "8px"
+buttonRadius = "8px"
+
+font = "'Inter':https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+codeFont = "'JetBrains Mono':https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
+codeFontSize = "0.875rem"
+codeTextColor = "#0F172A"
+baseFontSize = 15
+baseFontWeight = 400
+headingFontSizes = ["28px", "22px", "18px", "16px", "15px", "14px"]
+headingFontWeights = [700, 600, 600, 600, 600, 600]
+linkUnderline = true
+
+# 语义色板 — 医学专业配色
+chartCategoricalColors = ["#0D9488", "#1E40AF", "#059669", "#D97706", "#DC2626", "#7C3AED", "#64748B"]
+
+blueColor = "#1E40AF"
+greenColor = "#059669"
+redColor = "#DC2626"
+yellowColor = "#D97706"
+orangeColor = "#EA580C"
+violetColor = "#7C3AED"
+grayColor = "#64748B"
+
+greenBackgroundColor = "#ECFDF5"
+greenTextColor = "#065F46"
+redBackgroundColor = "#FEF2F2"
+redTextColor = "#991B1B"
+blueBackgroundColor = "#EFF6FF"
+blueTextColor = "#1E40AF"
+
+dataframeBorderColor = "#CBD5E1"
+dataframeHeaderBackgroundColor = "#F1F5F9"
+
+[theme.sidebar]
+backgroundColor = "#F8FAFC"
+secondaryBackgroundColor = "#F1F5F9"
+codeBackgroundColor = "#E2E8F0"
+textColor = "#0F172A"
+borderColor = "#CBD5E1"
+primaryColor = "#0D9488"
+dataframeHeaderBackgroundColor = "#F1F5F9"
+dataframeBorderColor = "#CBD5E1"
